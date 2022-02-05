@@ -1,3 +1,79 @@
+<h2>login.js</h2>
+
+```
+
+import React, { useState } from "react";
+
+export default function Login() {
+  const [user, setUser] = useState("");
+  const [login, setLogin] = useState("");
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    setUser(login);
+  };
+
+  let loggedInMessage;
+  let loginForm;
+
+  user
+    ? (loggedInMessage = (
+        <div>
+          <p>{user} logged in!</p>
+        </div>
+      ))
+    : (loginForm = (
+        <form>
+          <label htmlFor="username">Name:</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            onChange={(e) => setLogin(e.target.value)}
+          />
+          <button onClick={submitHandler}>Login</button>
+        </form>
+      ));
+  return (
+    <>
+      <div>
+        {loggedInMessage}
+        {loginForm}
+      </div>
+    </>
+  );
+}
+
+```
+
+<hr>
+<h2>login.test.js</h2>
+
+```
+
+import { render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import Login from "./login";
+
+describe("Login", () => {
+  test("user logs in and logged in message is displayed", async () => {
+    const { getByText, getByLabelText, getByRole, findByText } = render(
+      <Login />
+    );
+    expect(getByText("Name:")).toBeInTheDocument();
+    const nameInput = getByLabelText("Name:");
+    userEvent.type(nameInput, "Serhat");
+    expect(nameInput).toHaveValue("Serhat");
+    const loginBtn = getByRole("button", { name: "Login" });
+    userEvent.click(loginBtn);
+    expect(await findByText("Serhat logged in!")).toBeInTheDocument();
+  });
+});
+
+```
+
+<hr>
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
