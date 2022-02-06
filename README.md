@@ -8,9 +8,13 @@ export default function Login() {
   const [user, setUser] = useState("");
   const [login, setLogin] = useState("");
 
-  const submitHandler = (e) => {
+  const loginFunc = (e) => {
     e.preventDefault();
     setUser(login);
+  };
+
+  const logoutFunc = () => {
+    setUser("");
   };
 
   let loggedInMessage;
@@ -20,10 +24,12 @@ export default function Login() {
     ? (loggedInMessage = (
         <div>
           <p>{user} logged in!</p>
+          <button onClick={logoutFunc}>Log out</button>
         </div>
       ))
     : (loginForm = (
         <form>
+          <h1>Welcome!</h1>
           <label htmlFor="username">Name:</label>
           <input
             type="text"
@@ -31,7 +37,7 @@ export default function Login() {
             id="username"
             onChange={(e) => setLogin(e.target.value)}
           />
-          <button onClick={submitHandler}>Login</button>
+          <button onClick={loginFunc}>Login</button>
         </form>
       ));
   return (
@@ -55,18 +61,24 @@ import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Login from "./login";
 
-describe("Login", () => {
-  test("user logs in and logged in message is displayed", async () => {
+describe("Login & Log out", () => {
+  test("user logs in and logged in message is displayed + user logs out and reopens the login form", async () => {
     const { getByText, getByLabelText, getByRole, findByText } = render(
       <Login />
     );
     expect(getByText("Name:")).toBeInTheDocument();
+
     const nameInput = getByLabelText("Name:");
     userEvent.type(nameInput, "Serhat");
     expect(nameInput).toHaveValue("Serhat");
+
     const loginBtn = getByRole("button", { name: "Login" });
     userEvent.click(loginBtn);
     expect(await findByText("Serhat logged in!")).toBeInTheDocument();
+
+    const logoutBtn = getByRole("button", { name: "Log out" });
+    userEvent.click(logoutBtn);
+    expect(getByText("Welcome!")).toBeInTheDocument();
   });
 });
 

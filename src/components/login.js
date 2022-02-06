@@ -4,9 +4,13 @@ export default function Login() {
   const [user, setUser] = useState("");
   const [login, setLogin] = useState("");
 
-  const submitHandler = (e) => {
+  const loginFunc = (e) => {
     e.preventDefault();
     setUser(login);
+  };
+
+  const logoutFunc = () => {
+    setUser("");
   };
 
   let loggedInMessage;
@@ -16,10 +20,12 @@ export default function Login() {
     ? (loggedInMessage = (
         <div>
           <p>{user} logged in!</p>
+          <button onClick={logoutFunc}>Log out</button>
         </div>
       ))
     : (loginForm = (
         <form>
+          <h1>Welcome!</h1>
           <label htmlFor="username">Name:</label>
           <input
             type="text"
@@ -27,7 +33,7 @@ export default function Login() {
             id="username"
             onChange={(e) => setLogin(e.target.value)}
           />
-          <button onClick={submitHandler}>Login</button>
+          <button onClick={loginFunc}>Login</button>
         </form>
       ));
   return (
