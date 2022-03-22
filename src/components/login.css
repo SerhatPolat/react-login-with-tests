@@ -1,0 +1,30 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.loginBtn,
+.logoutBtn {
+  color: white;
+  height: 35px;
+  border: none;
+  cursor: pointer;
+}
+
+.loginBtn {
+  background-color: green;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.logoutBtn {
+  background-color: red;
+  border-radius: 10px;
+}
+
+#username {
+  height: 30px;
+}
+
+.nameLabel {
+  margin-right: 10px;
+}
