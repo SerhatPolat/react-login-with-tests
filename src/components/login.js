@@ -3,46 +3,49 @@ import "./login.css";
 
 export default function Login() {
   const [user, setUser] = useState("");
-  const [login, setLogin] = useState("");
+  const [userInput, setUserInput] = useState("");
 
-  const loginFunc = (e) => {
-    e.preventDefault();
-    setUser(login);
+  const loginFunc = () => {
+    setUser(userInput);
   };
 
   const logoutFunc = () => {
     setUser("");
+    setUserInput("");
   };
 
   let loggedInMessage;
   let loginForm;
 
-  user
-    ? (loggedInMessage = (
-        <div>
-          <p>{user} logged in!</p>
-          <button onClick={logoutFunc} className="logoutBtn">
-            Log out
-          </button>
-        </div>
-      ))
-    : (loginForm = (
-        <form>
-          <h1>Welcome!</h1>
-          <label htmlFor="username" className="nameLabel">
-            Name:
-          </label>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            onChange={(e) => setLogin(e.target.value)}
-          />
-          <button onClick={loginFunc} className="loginBtn">
-            Login
-          </button>
-        </form>
-      ));
+  if (user) {
+    loggedInMessage = (
+      <div>
+        <p>{user} logged in!</p>
+        <button onClick={logoutFunc} className="logoutBtn">
+          Log out
+        </button>
+      </div>
+    );
+  } else {
+    loginForm = (
+      <form>
+        <h1>Welcome!</h1>
+        <label htmlFor="username" className="nameLabel">
+          Name:
+        </label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          onChange={(e) => setUserInput(e.target.value)}
+        />
+        <button onClick={loginFunc} className="loginBtn">
+          Login
+        </button>
+      </form>
+    );
+  }
+
   return (
     <>
       <div>
